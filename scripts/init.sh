@@ -9,7 +9,8 @@ yum install -y epel-release > /dev/null 2>&1
 yum update -y > /dev/null 2>&1
 yum install -y python-pip python2-httpie.noarch wget docker  > /dev/null 2>&1
 
-# mv -vf /tmp/docker.service /usr/lib/systemd/system/docker.service
+# We require to setup an insecure registry for some
+# images installed by openshift
 mv -vf /tmp/daemon.json /etc/docker/daemon.json
 
 systemctl start docker
