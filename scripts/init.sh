@@ -2,12 +2,11 @@
 
 set -ex
 
-openshift_server_directory="/root/openshift-server"
-openshift_server_binary_url="https://github.com/openshift/origin/releases/download/v3.10.0/openshift-origin-server-v3.10.0-dd10d17-linux-64bit.tar.gz"
+temp_master_config_file='/tmp/master-config.yaml'
 
 yum install -y epel-release > /dev/null 2>&1
 yum update -y > /dev/null 2>&1
-yum install -y python-pip python2-httpie.noarch wget docker  > /dev/null 2>&1
+yum install -y python-pip python2-httpie.noarch wget docker git > /dev/null 2>&1
 
 # We require to setup an insecure registry for some
 # images installed by openshift
@@ -17,12 +16,13 @@ systemctl start docker
 systemctl status docker
 systemctl enable docker
 
-mkdir -p ${openshift_server_directory}
+yum install -y centos-release-openshift-origin
+yum install -y origin-clients
 
-pushd "${openshift_server_directory}"
-    wget -q -O openshift-server.tar.gz  "${openshift_server_binary_url}"
-    tar xvzf openshift-server.tar.gz --strip-components 1
-    rm openshift-server.tar.gz
-    export PATH="$(pwd)":$PATH
-    sudo ./oc cluster up
-popd
+
+git clone https://github.com/openshift-evangelists/oc-cluster-wrapper
+echo 'PATH=$HOME/oc-cluster-wrapper:$PATH' >> $HOME/.bash_profile
+echo 'export PATH' >> $HOME/.bash_profile
+source .bash_profile
+
+oc cluster up
