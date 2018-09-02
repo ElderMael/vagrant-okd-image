@@ -1,4 +1,8 @@
 # -*- mode: ruby -*-
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  raise 'You need to install "vagrant-vbguest" plugin in order to work with this machine!'
+end
+
 require 'yaml'
 
 githubSecrets = YAML.load_file(File.join(File.dirname(__FILE__), 'secrets/github.yaml'))
