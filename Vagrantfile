@@ -1,7 +1,4 @@
 # -*- mode: ruby -*-
-unless Vagrant.has_plugin?("vagrant-vbguest")
-  raise 'You need to install "vagrant-vbguest" plugin in order to work with this machine!'
-end
 
 require 'yaml'
 
@@ -15,6 +12,8 @@ Vagrant.configure("2") do |config|
     v.memory = 14336
     v.cpus = 6
   end
+
+  config.vm.synced_folder "openshift_config/", "/var/lib/origin/openshift.local.config/"
 
   config.vm.provision "file", source: "files/daemon.json",
                       destination: "/tmp/daemon.json"
