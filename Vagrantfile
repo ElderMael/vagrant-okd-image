@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-githubSecrets = YAML.load_file(File.join(File.dirname(__FILE__), 'secrets/github.yaml'))
+secrets = YAML.load_file(File.join(File.dirname(__FILE__), 'secrets/secrets.yaml'))
 
 Vagrant.configure("2") do |config|
 
@@ -13,15 +13,20 @@ Vagrant.configure("2") do |config|
     v.cpus = 6
   end
 
-  config.vm.synced_folder "openshift_config/", "/var/lib/origin/openshift.local.config/"
+  # config.vm.synced_folder "openshift_config/", "/home/vagrant/openshift.local.clusterup/"
 
   config.vm.provision "file", source: "files/daemon.json",
                       destination: "/tmp/daemon.json"
 
+  config.vm.provision "file", source: "files/master-config.yaml",
+                      destination: "/tmp/master-config.yaml"
+
   config.vm.provision "shell", path: "scripts/init.sh",
                       env: {
-                          'GITHUB_CLIENTID' => githubSecrets['clientID'],
-                          'GITHUB_SECRETID' => githubSecrets['secretID']
+                          'GITHUB_CLIENTID' => secrets['clientID'],
+                          'GITHUB_SECRETID' => secrets['secretID'],
+                          'DOMAIN_NAME' => secrets['domainName'],
+                          'GITHUB_ORGANIZATION' => secrets['githubOrganization']
                       }
 
 
