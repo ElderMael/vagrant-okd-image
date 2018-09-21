@@ -210,6 +210,13 @@ oauthConfig:
     method: auto
     serviceAccountMethod: prompt
   identityProviders:
+  - name: my_htpasswd_provider
+    challenge: true
+    login: true
+    provider:
+      apiVersion: v1
+      kind: HTPasswdPasswordIdentityProvider
+      file: /var/lib/origin/openshift.local.config/master/htpasswords
   - name: github
     challenge: false
     login: true
