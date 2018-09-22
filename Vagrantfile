@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
                           'GITHUB_CLIENTID' => secrets['clientID'],
                           'GITHUB_SECRETID' => secrets['secretID'],
                           'DOMAIN_NAME' => secrets['domainName'],
+                          'GITHUB_USERNAME' => secrets['githubUsername'],
                           'GITHUB_ORGANIZATION' => secrets['githubOrganization'],
                           'OPENSHIFT_SERVICE_ACCOUNT_PASSWORD' => secrets['openshiftServiceAccountPassword']
                       }

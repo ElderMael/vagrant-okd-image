@@ -52,7 +52,9 @@ pushd "${HOME}"
 
     oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
 
-    oc project pet-projects
+    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+
+    oc new-app 'https://github.com/ElderMael/discord-ts'
 
 
 popd
