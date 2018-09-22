@@ -48,7 +48,7 @@ pushd "${HOME}"
 
     sleep 5s
 
-    oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}"
+    oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}" --insecure-skip-tls-verify=true
 
     oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
 
