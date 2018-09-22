@@ -24,7 +24,12 @@ pushd "${HOME}"
     echo 'export PATH' >> $HOME/.bash_profile
     source .bash_profile
 
-    oc cluster up
+    if [ "${DOMAIN_NAME}" == "localhost" ]; then
+        oc cluster up
+    else
+        oc cluster up --public-hostname="${DOMAIN_NAME}"
+    fi
+
 
     sleep 30s
 
