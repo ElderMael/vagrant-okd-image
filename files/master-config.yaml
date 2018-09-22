@@ -103,10 +103,10 @@ etcdClientInfo:
   certFile: master.etcd-client.crt
   keyFile: master.etcd-client.key
   urls:
-  - https://${domainName}:4001
+  - https://localhost:4001
 etcdConfig:
-  address: ${domainName}:4001
-  peerAddress: ${domainName}:7001
+  address: localhost:4001
+  peerAddress: localhost:7001
   peerServingInfo:
     bindAddress: 0.0.0.0:7001
     bindNetwork: tcp4
