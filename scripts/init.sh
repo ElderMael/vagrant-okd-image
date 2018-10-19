@@ -65,5 +65,7 @@ pushd "${HOME}"
 
     oc new-app 'https://github.com/ElderMael/discord-ts'
 
+    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+
 
 popd
