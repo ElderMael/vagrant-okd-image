@@ -50,6 +50,9 @@ pushd "${HOME}"
     htpasswd -b -c /var/lib/origin/openshift.local.config/master/htpasswords \
         serviceacc "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}"
 
+    htpasswd -b -c /var/lib/origin/openshift.local.config/master/htpasswords \
+        'system:admin' "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}"
+
     oc cluster up --use-existing-config=true
 
     while ! http --check-status --verify=no GET https://localhost:8443/
