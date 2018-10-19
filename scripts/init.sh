@@ -33,6 +33,12 @@ pushd "${HOME}"
 
     sleep 30s
 
+    oc login -u system:admin
+
+    oc create serviceaccount userroot
+
+    oc adm policy add-scc-to-user anyuid -z useroot
+
     oc cluster down
 
     sed --in-place='' "s/\${domainName}/${DOMAIN_NAME}/g" /tmp/master-config.yaml
@@ -56,8 +62,6 @@ pushd "${HOME}"
     oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}" --insecure-skip-tls-verify=true
 
     oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
-
-    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
     oc new-app 'https://github.com/ElderMael/discord-ts'
 
