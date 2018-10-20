@@ -39,7 +39,7 @@ pushd "${HOME}"
 
     oc adm policy add-scc-to-user anyuid -z useroot
 
-    oc adm policy add-scc-to-user admin ElderMael
+    oc adm policy add-cluster-role-to-group admin system:authenticated
 
     oc cluster down
 
