@@ -73,4 +73,8 @@ pushd "${HOME}"
     oc new-app 'https://github.com/hwdsl2/docker-ipsec-vpn-server.git'
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
+
+    # Export created objects as safeguard
+    oc export all --as-template=backup ~/backup.yaml
+
 popd
