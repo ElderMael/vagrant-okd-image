@@ -39,6 +39,8 @@ pushd "${HOME}"
 
     oc adm policy add-scc-to-user anyuid -z useroot
 
+    oc adm policy add-scc-to-user admin ElderMael
+
     oc cluster down
 
     sed --in-place='' "s/\${domainName}/${DOMAIN_NAME}/g" /tmp/master-config.yaml
