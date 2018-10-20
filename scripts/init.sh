@@ -75,6 +75,6 @@ pushd "${HOME}"
 
 
     # Create VPN Opaque Secret From Template
-    oc template -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
+    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
 
 popd
