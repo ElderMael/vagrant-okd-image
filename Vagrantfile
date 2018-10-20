@@ -21,6 +21,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "files/master-config.yaml",
                       destination: "/tmp/master-config.yaml"
 
+  config.vm.provision "file", source: "files/oc_templates/",
+                      destination: "/tmp/oc_templates"
+
   config.vm.provision "shell", path: "scripts/init.sh",
                       env: {
                           'GITHUB_CLIENTID' => secrets['clientID'],
@@ -32,11 +35,11 @@ Vagrant.configure("2") do |config|
                       }
 
 
-  config.vm.network "forwarded_port", guest: 8443, host: 8443
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.network "forwarded_port", guest: 443, host: 443
   config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 443, host: 443
   config.vm.network "forwarded_port", guest: 500, host: 500
   config.vm.network "forwarded_port", guest: 4500, host: 4500
+  config.vm.network "forwarded_port", guest: 8443, host: 8443
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
 
 end
