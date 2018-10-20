@@ -63,11 +63,14 @@ pushd "${HOME}"
 
     oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}" --insecure-skip-tls-verify=true
 
+    # Pet Projects Namespace
     oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
-
     oc new-app 'https://github.com/ElderMael/discord-ts'
-
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
+    # Tooling Namespace
+    oc new-project tools --description="Tools that run on the server" --display-name="Tools"
+    oc new-app 'https://github.com/hwdsl2/docker-ipsec-vpn-server.git'
+    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
 popd
