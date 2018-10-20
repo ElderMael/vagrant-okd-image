@@ -59,7 +59,7 @@ pushd "${HOME}"
         echo '.'; sleep 5s
     done
 
-    sleep 5s
+    sleep 30s
 
     oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}" --insecure-skip-tls-verify=true
 
