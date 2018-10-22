@@ -58,16 +58,13 @@ pushd "${HOME}"
      # Pet Projects Namespace
     oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
     oc new-app 'https://github.com/ElderMael/discord-ts'
-    oc adm policy add-scc-to-user privileged default
-    oc adm policy add-scc-to-user privileged userroot
-    oc adm policy add-role-to-user admin "system:admin"
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
     # Tooling Namespace
     oc new-project tools --description="Tools that run on the server" --display-name="Tools"
-    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
     oc adm policy add-scc-to-user privileged default
     oc adm policy add-scc-to-user privileged userroot
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
 
 popd
