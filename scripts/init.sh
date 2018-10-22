@@ -38,7 +38,13 @@ pushd "${HOME}"
     oc adm policy add-scc-to-user privileged default
     oc adm policy add-scc-to-user privileged userroot
 
-    oc adm policy add-cluster-role-to-group admin system:authenticated
+    # Pet Projects Namespace
+    oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
+    oc new-app 'https://github.com/ElderMael/discord-ts'
+
+    # Tooling Namespace
+    oc new-project tools --description="Tools that run on the server" --display-name="Tools"
+    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
 
     oc cluster down
 
@@ -60,19 +66,8 @@ pushd "${HOME}"
 
     sleep 30s
 
-    oc login -u serviceacc -p "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}" --insecure-skip-tls-verify=true
-
-    # Pet Projects Namespace
-    oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
-    oc new-app 'https://github.com/ElderMael/discord-ts'
+    oc login -u system:admin
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
-
-    # Tooling Namespace
-    oc new-project tools --description="Tools that run on the server" --display-name="Tools"
-    # oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
-    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
-
-
-
+    
 popd
