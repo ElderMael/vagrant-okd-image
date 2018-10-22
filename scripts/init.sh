@@ -35,7 +35,7 @@ pushd "${HOME}"
 
     oc login -u system:admin
 
-    ac adm policy add-scc-to-user anyuid default
+    oc adm policy add-scc-to-user anyuid default
     oc adm policy add-scc-to-user anyuid userroot
 
     oc adm policy add-cluster-role-to-group admin system:authenticated
