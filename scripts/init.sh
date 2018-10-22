@@ -71,6 +71,7 @@ pushd "${HOME}"
     # oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
     oc process -f /tmp/oc_templates/secret.yaml | oc apply --force -f -
+    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
 
 
 
