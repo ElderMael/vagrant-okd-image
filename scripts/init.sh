@@ -70,8 +70,9 @@ pushd "${HOME}"
 
     # Tooling Namespace
     oc new-project tools --description="Tools that run on the server" --display-name="Tools"
-    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
+    # oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+    oc new-app 'https://github.com/hwdsl2/docker-ipsec-vpn-server.git'
 
 
 
