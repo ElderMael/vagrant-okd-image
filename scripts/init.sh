@@ -35,9 +35,7 @@ pushd "${HOME}"
 
     oc login -u system:admin
 
-    oc create serviceaccount userroot
-
-    oc adm policy add-scc-to-user anyuid -z useroot
+    oc adm policy add-scc-to-user anyuid useroot
 
     oc adm policy add-cluster-role-to-group admin system:authenticated
 
@@ -72,7 +70,7 @@ pushd "${HOME}"
     oc new-project tools --description="Tools that run on the server" --display-name="Tools"
     # oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
-    oc new-app 'https://github.com/hwdsl2/docker-ipsec-vpn-server.git'
+    oc process -f /tmp/oc_templates/secret.yaml | oc apply --force -f -
 
 
 
