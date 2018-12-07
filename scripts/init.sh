@@ -62,9 +62,6 @@ pushd "${HOME}"
 
     # Tooling Namespace
     oc new-project tools --description="Tools that run on the server" --display-name="Tools"
-    oc adm policy add-scc-to-user privileged default
-    oc adm policy add-scc-to-user privileged userroot
     oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
-    oc process -f /tmp/oc_templates/vpn_secret.yaml | oc apply -f -
 
 popd
