@@ -24,15 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "files/oc_templates/",
                       destination: "/tmp/oc_templates"
 
-  config.vm.provision "shell", path: "scripts/init.sh",
-                      env: {
-                          'GITHUB_CLIENTID' => secrets['clientID'],
-                          'GITHUB_SECRETID' => secrets['secretID'],
-                          'DOMAIN_NAME' => secrets['domainName'],
-                          'GITHUB_ORGANIZATION' => secrets['githubOrganization'],
-                          'GITHUB_USERNAME' => secrets['githubUsername'],
-                          'OPENSHIFT_SERVICE_ACCOUNT_PASSWORD' => secrets['openshiftServiceAccountPassword']
-                      }
+  config.vm.provision "shell", path: "scripts/init.sh", env: secrets
 
 
   config.vm.network "forwarded_port", guest: 80, host: 80
