@@ -19,11 +19,6 @@ yum install -y origin-clients
 
 pushd "${HOME}"
 
-    git clone https://github.com/openshift-evangelists/oc-cluster-wrapper
-    echo 'PATH=$HOME/oc-cluster-wrapper:$PATH' >> $HOME/.bash_profile
-    echo 'export PATH' >> $HOME/.bash_profile
-    source .bash_profile
-
     if [ "${DOMAIN_NAME}" == "localhost" ]; then
         oc cluster up
     else
@@ -31,7 +26,7 @@ pushd "${HOME}"
     fi
 
 
-    sleep 30s
+    sleep 60s
 
     oc cluster down
 
