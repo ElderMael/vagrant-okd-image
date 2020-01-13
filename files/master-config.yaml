@@ -217,7 +217,7 @@ oauthConfig:
     provider:
       apiVersion: v1
       kind: HTPasswdPasswordIdentityProvider
-      file: /var/lib/origin/openshift.local.config/master/htpasswords
+      file: /etc/origin/master/htpasswd
   - name: 'GitHub'
     challenge: false
     login: true

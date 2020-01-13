@@ -14,7 +14,7 @@ systemctl start docker
 systemctl status docker
 systemctl enable docker
 
-yum install -y centos-release-openshift-origin37
+yum install -y centos-release-openshift-origin311
 yum install -y origin-clients
 
 pushd "${HOME}"
@@ -40,11 +40,12 @@ pushd "${HOME}"
     sed --in-place='' "s/\${secretID}/${GITHUB_SECRETID}/g" /tmp/master-config.yaml
     sed --in-place='' "s/\${githubOrganization}/${GITHUB_ORGANIZATION}/g" /tmp/master-config.yaml
 
-    mv -vf /tmp/master-config.yaml /var/lib/origin/openshift.local.config/master/
-    htpasswd -b -c /var/lib/origin/openshift.local.config/master/htpasswords \
+    mv -vf /tmp/master-config.yaml /root/openshift.local.clusterup/openshift-controller-manager/
+    mkdir -p /etc/origin/master/
+    htpasswd -b -c /etc/origin/master/htpasswd \
         serviceacc "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}"
 
-    oc cluster up --use-existing-config=true
+    oc cluster up --public-hostname="${DOMAIN_NAME}"
 
     while ! http --check-status --verify=no GET https://localhost:8443/
     do
@@ -55,13 +56,13 @@ pushd "${HOME}"
 
     oc login -u system:admin
 
-     # Pet Projects Namespace
-    oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
-    oc new-app 'https://github.com/ElderMael/discord-ts'
-    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
-
-    # Tooling Namespace
-    oc new-project tools --description="Tools that run on the server" --display-name="Tools"
-    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+#     # Pet Projects Namespace
+#    oc new-project pet-projects --description="Pet Projects" --display-name="Projects"
+#    oc new-app 'https://github.com/ElderMael/discord-ts'
+#    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
+#
+#    # Tooling Namespace
+#    oc new-project tools --description="Tools that run on the server" --display-name="Tools"
+#    oc adm policy add-role-to-user admin "${GITHUB_USERNAME}"
 
 popd
