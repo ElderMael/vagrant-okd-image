@@ -52,7 +52,7 @@ pushd "${HOME}"
         echo '.'; sleep 5s
     done
 
-    sleep 30s
+    sleep 120s
 
     oc login -u system:admin
 
