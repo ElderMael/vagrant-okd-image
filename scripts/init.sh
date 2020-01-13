@@ -40,7 +40,7 @@ pushd "${HOME}"
     sed --in-place='' "s/\${secretID}/${GITHUB_SECRETID}/g" /tmp/master-config.yaml
     sed --in-place='' "s/\${githubOrganization}/${GITHUB_ORGANIZATION}/g" /tmp/master-config.yaml
 
-    mv -vf /tmp/master-config.yaml /root/openshift.local.clusterup/openshift-controller-manager/
+    mv -vf /tmp/master-config.yaml /root/openshift.local.clusterup/openshift-apiserver/
     mkdir -p /etc/origin/master/
     htpasswd -b -c /etc/origin/master/htpasswd \
         serviceacc "${OPENSHIFT_SERVICE_ACCOUNT_PASSWORD}"
