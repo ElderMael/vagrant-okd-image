@@ -19,17 +19,6 @@ yum install -y origin-clients
 
 pushd "${HOME}"
 
-    if [ "${DOMAIN_NAME}" == "localhost" ]; then
-        oc cluster up
-    else
-        oc cluster up --public-hostname="${DOMAIN_NAME}"
-    fi
-
-
-    sleep 60s
-
-    oc cluster down
-
     sed --in-place='' "s/\${domainName}/${DOMAIN_NAME}/g" /tmp/master-config.yaml
     sed --in-place='' "s/\${clientID}/${GITHUB_CLIENTID}/g" /tmp/master-config.yaml
     sed --in-place='' "s/\${secretID}/${GITHUB_SECRETID}/g" /tmp/master-config.yaml
@@ -42,7 +31,7 @@ pushd "${HOME}"
 
     oc cluster up --public-hostname="${DOMAIN_NAME}"
 
-    while ! http --check-status --verify=no GET https://localhost:8443/
+    while ! http --check-status --verify=no GET https://localhost:8443/console
     do
         echo '.'; sleep 5s
     done
